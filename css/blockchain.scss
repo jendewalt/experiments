@@ -1,0 +1,94 @@
+body {
+    $mid_grey: #4e4e54;
+    $blue: #1892D6;
+
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 1px;
+    background-color: #f0f0f0;
+    color: $mid_grey;
+
+    header {
+        margin-bottom: 20px;
+        padding: 14px 20px;
+        text-align: left;
+        font-size: 20px;
+        color: #424747;
+        background: #FFF;
+        border-bottom: 2px solid $blue;
+    }
+
+    .flash {
+        animation: flash 2s;
+        -webkit-animation: flash 2s; /* Safari and Chrome */
+    }
+
+    ul {
+        
+        li {
+            display: inline-block;
+            vertical-align: top;
+            width: 200px;
+            height: 260px;
+            padding: 15px 25px;
+            margin: 17px;
+            text-align: left;
+            border-bottom: 5px solid $blue;
+            border-top: 5px solid $blue;
+            border-radius: 3px;
+            background-color: #FFF;
+
+            table {
+                table-layout: fixed;
+                width: 100%;
+
+                .label {
+                    width: 30%;
+                    font-weight: bold;
+                }
+
+                td {
+                    padding: 3px 0;
+                    word-wrap: break-word;
+                    
+                    &.height {
+                        padding-bottom: 20px;
+                        border-bottom: 1px solid $mid_grey;
+                    }
+
+                    &.hash {
+                        padding-top: 20px;
+                    }
+                }               
+            }
+        }
+    }
+
+    footer {
+        text-align: left;
+        margin-top: 20px; 
+        padding: 10px;
+        font-size: 13px;
+        color: #979797;
+
+        a {
+            color: #979797;
+        }
+    }
+}
+
+@keyframes flash {
+    from {box-shadow: 0 6px 6px -3px rgba(70, 180, 230, 0.5), 
+                    0 -6px 6px -3px rgba(70, 180, 230, 0.5);}
+    to {box-shadow: 0 6px 6px -3px rgba(70, 180, 230, 0.0), 
+                    0 -6px 6px -3px rgba(70, 180, 230, 0.0);}
+}
+
+@-webkit-keyframes flash {
+    from {box-shadow: 0 6px 6px -3px rgba(70, 180, 230, 0.5), 
+                    0 -6px 6px -3px rgba(70, 180, 230, 0.5);}
+    to {box-shadow: 0 6px 6px -3px rgba(70, 180, 230, 0.0), 
+                    0 -6px 6px -3px rgba(70, 180, 230, 0.0);}
+}

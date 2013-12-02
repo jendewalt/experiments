@@ -1,0 +1,18 @@
+{
+    "js_files": [
+        "vendor/jquery.js",
+        "vendor/json2.js",
+        "vendor/underscore.js",
+        "vendor/backbone.js",
+        "vendor/moment.js",
+        "ext/backbone.remove.js",
+        "system/jst.js",
+        "models",
+        "collections",
+        "views",
+        "templates",
+        "helpers",
+        "router.js",
+        "init.js"
+    ]
+}
