@@ -26,8 +26,8 @@ if (app.get('env') === 'production') {
 
     var compiled_css = sass.renderSync({ file: 'css/blockchain.scss' });
 
-    fs.writeFileSync('public/css/blockchain.css', compiled_css);
-    fs.createReadStream('css/reset.css').pipe(fs.createWriteStream('public/css/reset.css'));
+    fs.writeFileSync('experiments/css/blockchain.css', compiled_css);
+    fs.createReadStream('css/reset.css').pipe(fs.createWriteStream('experiments/css/reset.css'));
 } else {
     app.set('ipaddr', '127.0.0.1');
 }
@@ -39,7 +39,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 
-app.use(express.static('public', __dirname + '/public'));
+app.use(express.static('experiments', __dirname + '/public'));
 
 app.get('/experiments', function (req, res) {
     res.render('main');
@@ -206,7 +206,7 @@ function getJavascriptFiles(items) {
 
 function minifyJavascriptFiles(js_files) {
     js_files = _.map(js_files, function (file) { return 'javascripts/' + file; });
-    var output_file = 'public/javascripts/application.js';
+    var output_file = 'experiments/javascripts/application.js';
     var js_comp = new compressor.minify({
         type: 'no-compress',
         fileIn: js_files,
