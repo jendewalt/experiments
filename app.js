@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
-var io = require('socket.io').listen(server, { log: false });
+var io = require('socket.io').listen(server, {resource: '/experiments/socket.io', log: false });
 var WebSocket = require('ws');
 var ws = new WebSocket('ws://ws.blockchain.info/inv');
 var _ = require('underscore');
@@ -41,7 +41,7 @@ app.use(express.methodOverride());
 
 app.use(express.static('public', __dirname + '/public'));
 
-app.get('/', function (req, res) {
+app.get('/experiments', function (req, res) {
     res.render('main');
 });
 
@@ -78,7 +78,7 @@ var block_list = [];
 
 queryBlockchainApi(formBlockList);
 
-io.sockets.on('connection', function (socket) {
+var experiments_io = io.of('/experiments').on('connection', function (socket) {
     if (data_cache.length === 50) {
         emitData(data_cache);        
     }
@@ -92,7 +92,7 @@ function dateInMilliseconds(days_ago) {
 }
 
 function emitData(data) {
-    io.sockets.emit('data', data);
+    experiments_io.emit('data', data);
 }
 
 function queryBlockchainApi(callback, days_ago) {

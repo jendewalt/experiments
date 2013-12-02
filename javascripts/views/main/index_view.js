@@ -3,7 +3,7 @@ MainIndexView = Backbone.View.extend({
     },
 
     initialize: function () {
-        var blockchain_io = io.connect(document.domain);
+        var blockchain_io = io.connect(document.domain + '/experiments', {resource: 'experiments/socket.io'});
 
         this.render();
 
