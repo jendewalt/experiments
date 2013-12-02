@@ -174,7 +174,7 @@ function mergeWithDataCache(data, flags) {
             hash: data.hash,
             ver: data.version,
             mrkl_root: data.mrklRoot,
-            time: data.time,
+            time: data.time * 1000,
             bits: data.bits,
             nonce: data.nonce,
             n_tx: data.nTx,
