@@ -26,5 +26,4 @@ MainIndexView = Backbone.View.extend({
     render: function () {
         this.$el.html(render('main/index'));
     }
-
 });

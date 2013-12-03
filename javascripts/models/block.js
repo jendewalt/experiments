@@ -1,3 +1,1 @@
-Block = Backbone.Model.extend({
-    // idAttribute: 'height'
-});
+Block = Backbone.Model();
