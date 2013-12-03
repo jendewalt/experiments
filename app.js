@@ -91,8 +91,9 @@ function dateInMilliseconds(days_ago) {
     return Math.floor(new Date().getTime() / one_day) * one_day + date_offset - days_ago * one_day;
 }
 
-function emitData(data) {
-    experiments_io.emit('data', data);
+function emitData(data, key) {
+    key = key || 'data';
+    experiments_io.emit(key, data);
 }
 
 function queryBlockchainApi(callback, days_ago) {
@@ -116,6 +117,7 @@ function queryBlockchainApi(callback, days_ago) {
 
 function formBlockList(data, days_ago) {
     block_list = block_list.concat(data.blocks);
+
     if (block_list.length < 50) {
         queryBlockchainApi(formBlockList, days_ago + 1);
     } else {
@@ -155,6 +157,8 @@ function formDataCache(data) {
     delete data.relayed_by;
     delete data.tx;
 
+
+    data.id = String(data.height) + String(data.time);
     data.time = data.time * 1000;
     data_cache.push(data);
 
@@ -171,6 +175,7 @@ function mergeWithDataCache(data, flags) {
 
     if (!_.findWhere(data_cache, { hash: data.hash })) {
         data = {
+            id: String(data.height) + String(data.time),
             hash: data.hash,
             ver: data.version,
             mrkl_root: data.mrklRoot,
@@ -182,12 +187,17 @@ function mergeWithDataCache(data, flags) {
             block_index: data.blockIndex,
             height: data.height
         }
+
         data_cache.shift();
         data_cache.push(data);
 
-        emitData(data_cache);
+        emitData(data_cache, 'stream');
+        data_cache = [];
+        block_list = [];
+        queryBlockchainApi(formBlockList);
     }
 }
+
 
 function getJavascriptFiles(items) {
     items = items || [];

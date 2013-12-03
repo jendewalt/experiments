@@ -15,6 +15,10 @@ MainIndexView = Backbone.View.extend({
         });
 
         blockchain_io.on('data', $.proxy(function (data) {
+            this.collection.reset(data);
+        }, this));
+
+        blockchain_io.on('stream', $.proxy(function (data) {
             this.collection.set(data);
         }, this));
     },
