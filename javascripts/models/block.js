@@ -1,2 +1,1 @@
-Block = Backbone.Model.extend({
-});
+Block = Backbone.Model;

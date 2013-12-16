@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
-var io = require('socket.io').listen(server, {resource: '/experiments/socket.io', log: false });
+var io = require('socket.io').listen(server, { log: false });
 var WebSocket = require('ws');
 var ws = new WebSocket('ws://ws.blockchain.info/inv');
 var _ = require('underscore');
@@ -26,8 +26,8 @@ if (app.get('env') === 'production') {
 
     var compiled_css = sass.renderSync({ file: 'css/blockchain.scss' });
 
-    fs.writeFileSync('experiments/css/blockchain.css', compiled_css);
-    fs.createReadStream('css/reset.css').pipe(fs.createWriteStream('experiments/css/reset.css'));
+    fs.writeFileSync('public/css/blockchain.css', compiled_css);
+    fs.createReadStream('css/reset.css').pipe(fs.createWriteStream('public/css/reset.css'));
 } else {
     app.set('ipaddr', '127.0.0.1');
 }
@@ -39,9 +39,9 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 
-app.use(express.static('experiments', __dirname + '/public'));
+app.use(express.static('public', __dirname + '/public'));
 
-app.get('/experiments', function (req, res) {
+app.get('/', function (req, res) {
     res.render('main');
 });
 
@@ -78,7 +78,7 @@ var block_list = [];
 
 queryBlockchainApi(formBlockList);
 
-var experiments_io = io.of('/experiments').on('connection', function (socket) {
+io.sockets.on('connection', function (socket) {
     if (data_cache.length === 50) {
         emitData(data_cache);        
     }
@@ -93,7 +93,7 @@ function dateInMilliseconds(days_ago) {
 
 function emitData(data, key) {
     key = key || 'data';
-    experiments_io.emit(key, data);
+    io.sockets.emit(key, data);
 }
 
 function queryBlockchainApi(callback, days_ago) {
@@ -216,7 +216,7 @@ function getJavascriptFiles(items) {
 
 function minifyJavascriptFiles(js_files) {
     js_files = _.map(js_files, function (file) { return 'javascripts/' + file; });
-    var output_file = 'experiments/javascripts/application.js';
+    var output_file = 'public/javascripts/application.js';
     var js_comp = new compressor.minify({
         type: 'no-compress',
         fileIn: js_files,

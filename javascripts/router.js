@@ -1,6 +1,6 @@
 Router = Backbone.Router.extend({
     routes: {
-        'experiments': 'mainIndex'
+        '': 'mainIndex'
     },
 
     mainIndex: function () {
